@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv"
-import {Configuration, OpenAIApi} from "openai";
+const dotenv = require("dotenv")
+const { Configuration, OpenAIApi } = require("openai");
 dotenv.config();
 
 const configuration = new Configuration({
@@ -12,7 +12,7 @@ const openai = new OpenAIApi(configuration);
  * @param prompt
  * @return {Promise<*|string>}
  */
-export async function chatGPT({ prompt }) {
+async function chatGPT({ prompt }) {
   const completion = await openai.createCompletion({
     model: "text-davinci-003",
     prompt,
@@ -26,3 +26,6 @@ export async function chatGPT({ prompt }) {
   return completion.data.choices.at(0)?.text ?? "알 수 없는 에러"
 }
 
+module.exports = {
+  chatGPT
+}

@@ -1,6 +1,6 @@
-import * as dotenv from "dotenv"
-import { RTMClient, WebClient } from "@slack/client";
-import { chatGPT } from "./chatGPT";
+const dotenv = require("dotenv")
+const { RTMClient, WebClient } = require("@slack/client");
+const { chatGPT } = require("./chatGPT");
 
 dotenv.config();
 
