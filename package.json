@@ -1,0 +1,28 @@
+{
+  "name": "chat-gpt-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonghakseo/chat-gpt-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jonghakseo/chat-gpt-bot/issues"
+  },
+  "homepage": "https://github.com/Jonghakseo/chat-gpt-bot#readme",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@slack/client": "^5.0.2",
+    "dotenv": "^16.0.3",
+    "openai": "^3.1.0",
+    "ts-node": "^10.9.1"
+  }
+}
