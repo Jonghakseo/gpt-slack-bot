@@ -13,7 +13,7 @@ const web = new WebClient(token);
 rtm.start();
 
 rtm.on("message", (message) => {
-  console.log(message)
+  // console.log(message)
 
   if (!!message.subtype){
     return;
@@ -22,6 +22,8 @@ rtm.on("message", (message) => {
   if (!message.text.includes(botTag)){
     return
   }
+
+  const messageText = message.text.replace(botTag, '')
 
   const reply = (text:string) => {
     web.chat.postMessage({
@@ -33,12 +35,12 @@ rtm.on("message", (message) => {
 
   (async ()=> {
     try {
-      const result = await chatGPT({ prompt: message.text.replace(botTag, '')});
-      reply(result)
+      const result = await chatGPT({ prompt: `${messageText}.` });
+      reply(`|> ${messageText}\n${result}`)
     }catch (error) {
       console.error(error)
       if (error instanceof Error){
-        reply(error.message)
+        reply(`|> ${messageText}\n${error.message}`)
       }
     }
   })()
