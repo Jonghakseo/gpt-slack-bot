@@ -51,7 +51,7 @@ rtm.on("message", (message) => {
 // 렌더 헬스체크
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 10000;
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
