@@ -1,0 +1,19 @@
+name: send request cron job
+
+on:
+  schedule:
+    # https://crontab.guru/
+    # every ten minute
+    - cron: '*/10 * * * *'
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: HTTP Request Action
+        uses: fjogeleit/http-request-action@v1.13.0
+        with:
+          url: 'https://chat-gpt-slack-bot.onrender.com/'
+          method: 'GET'
+          customHeaders: '{"Content-Type": "application/json", "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"}'
