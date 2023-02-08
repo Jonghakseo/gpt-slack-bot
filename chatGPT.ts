@@ -19,11 +19,11 @@ export async function chatGPT({ prompt }: ChatGPTInput): Promise<string> {
     // 의외성 (0~1)
     temperature: 0.7,
     // max 4000
-    max_tokens: 3600,
+    max_tokens: 3000,
     // 단어 풀의 범위(0~1)
     top_p: 1,
     // 자주 사용하는 단어 억제
-    frequency_penalty: 0.5,
+    frequency_penalty: 0.2,
     // 이미 사용된 단어 억제
     presence_penalty: 0.1
   });
