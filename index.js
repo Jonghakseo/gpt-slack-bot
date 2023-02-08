@@ -4,8 +4,8 @@ const { chatGPT } = require("./chatGPT");
 
 dotenv.config();
 
-const token = String(process.env.SLACK_TOKEN)
-const botTag = String(process.env.BOT_TAG)
+const token = "xoxb-14819386034-4775550938816-78ZqAFBLD0o3lYoFpzSxYv9a"
+const botTag = "<@U04NTG6TLQ0>"
 
 const rtm = new RTMClient(token);
 const web = new WebClient(token);
