@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "pm2": "pm2 start yarn --name api -- start",
     "start": "ts-node index.ts"
   },
   "repository": {
