@@ -7,12 +7,12 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-
-type ChatGPTInput = {
-  prompt: string
-}
-
-export async function chatGPT({ prompt }: ChatGPTInput): Promise<string> {
+/**
+ *
+ * @param prompt
+ * @return {Promise<*|string>}
+ */
+export async function chatGPT({ prompt }) {
   const completion = await openai.createCompletion({
     model: "text-davinci-003",
     prompt,

@@ -23,7 +23,10 @@ rtm.on("message", (message) => {
     return
   }
 
-  const reply = (text:string) => {
+  /**
+   * @param text
+   */
+  const reply = (text) => {
     web.chat.postMessage({
       channel: message.channel,
       thread_ts: message.ts,
