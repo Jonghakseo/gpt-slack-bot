@@ -23,7 +23,7 @@ async function chatGPT({ prompt }) {
     presence_penalty: 0
   });
 
-  return completion.data.choices.at(0)?.text ?? "알 수 없는 에러"
+  return completion.data.choices[0]?.text ?? "알 수 없는 에러"
 }
 
 module.exports = {
