@@ -13,7 +13,6 @@ const web = new WebClient(token);
 rtm.start();
 
 rtm.on("message", (message) => {
-  // console.log(message)
 
   if (!!message.subtype){
     return;
@@ -35,10 +34,9 @@ rtm.on("message", (message) => {
 
   (async ()=> {
     try {
-      const result = await chatGPT({ prompt: `${messageText}.` });
+      const result = await chatGPT({ prompt: messageText });
       reply(`|> ${messageText}\n${result}`)
     }catch (error) {
-      console.error(error)
       if (error instanceof Error){
         reply(`|> ${messageText}\n${error.message}`)
       }
