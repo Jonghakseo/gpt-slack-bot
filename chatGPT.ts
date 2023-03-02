@@ -31,6 +31,6 @@ export async function chatGPT({ prompt }: ChatGPTInput): Promise<string> {
     presence_penalty: 0.1
   })
 
-  return completion.data.choices.at(0)?.message.content ?? "알 수 없는 에러"
+  return completion.data.choices.at(0)?.message?.content ?? "알 수 없는 에러"
 }
 
