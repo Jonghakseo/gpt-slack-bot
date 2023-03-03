@@ -16,7 +16,7 @@ export async function chatGPT({ prompt }: ChatGPTInput): Promise<string> {
   const completion =await openai.createChatCompletion({
     model:"gpt-3.5-turbo",
     // max 4000
-    max_tokens: 4000,
+    max_tokens: 2000,
     messages:[
       {"role": "system", "content": "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible."},
       {"role": "user", "content": prompt },
