@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv"
-import { RTMClient, WebClient } from "@slack/client";
-import { chatGPT } from "./chatGPT";
+import {RTMClient, WebClient} from "@slack/client";
+import {chatGPT} from "./chatGPT";
+import type {ChatCompletionRequestMessage} from "openai";
+import {getCacheData, setCacheData} from "./cache";
 
 dotenv.config();
 
@@ -14,17 +16,24 @@ rtm.start();
 
 rtm.on("message", (message) => {
 
-  if (!!message.subtype){
+  if (!!message.subtype) {
     return;
   }
 
-  if (!message.text.includes(botTag)){
+  if (!message.text.includes(botTag)) {
     return
   }
 
   const messageText = message.text.replace(botTag, '')
+  const newMessage : ChatCompletionRequestMessage = { role: "user", content: messageText };
 
-  const reply = (text:string) => {
+  const key = message.thread_ts ?? message.ts;
+
+  const cachedMessages: ChatCompletionRequestMessage[] = getCacheData(key) ?? []
+  const newMessages: ChatCompletionRequestMessage[] = cachedMessages.concat(newMessage)
+  setCacheData(key, newMessages)
+
+  const reply = (text: string) => {
     web.chat.postMessage({
       channel: message.channel,
       thread_ts: message.ts,
@@ -32,15 +41,17 @@ rtm.on("message", (message) => {
     })
   }
 
-  (async ()=> {
+  (async () => {
     try {
-      const result = await chatGPT({ prompt: messageText });
-      reply(`|> ${messageText}\n${result}`)
-    }catch (error) {
-      if (error instanceof Error){
+      const response = await chatGPT({ messages:newMessages });
+
+      const updatedMessages: ChatCompletionRequestMessage[] = newMessages.concat(response)
+      setCacheData(key, updatedMessages)
+      reply(`|> ${messageText}\n${response.content}`)
+    } catch (error) {
+      if (error instanceof Error) {
         reply(`|> ${messageText}\n${error.message}`)
       }
     }
   })()
-
 })

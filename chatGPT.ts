@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv"
-import {Configuration, OpenAIApi} from "openai";
+import {ChatCompletionRequestMessage, Configuration, OpenAIApi} from "openai";
 dotenv.config();
 
 const configuration = new Configuration({
@@ -9,17 +9,23 @@ const openai = new OpenAIApi(configuration);
 
 
 type ChatGPTInput = {
-  prompt: string
+  messages: ChatCompletionRequestMessage[]
 }
 
-export async function chatGPT({ prompt }: ChatGPTInput): Promise<string> {
-  const completion =await openai.createChatCompletion({
+type Response = {
+  role: 'assistant',
+  content: string
+}
+
+export async function chatGPT({ messages }: ChatGPTInput): Promise<Response> {
+  const completion = await openai.createChatCompletion({
     model:"gpt-3.5-turbo",
     // max 4000
-    max_tokens: 2000,
+    max_tokens: 1800,
     messages:[
-      {"role": "system", "content": "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible."},
-      {"role": "user", "content": prompt },
+      {"role": "system", "content": "You are ChatGPT. Answer as concisely as possible."},
+      // {"role": "user", "content": prompt },
+      ...messages
     ],
     // 의외성 (0~1)
     temperature: 0.7,
@@ -31,6 +37,14 @@ export async function chatGPT({ prompt }: ChatGPTInput): Promise<string> {
     presence_penalty: 0.1
   })
 
-  return completion.data.choices.at(0)?.message?.content ?? "알 수 없는 에러"
+  const response = completion.data.choices.at(0)?.message?.content
+
+  if (!response) {
+    throw Error("알 수 없는 에러 : 응답을 찾을 수 없습니다.")
+  }
+  return {
+    role:"assistant",
+    content: response
+  }
 }
 
