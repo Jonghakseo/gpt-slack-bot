@@ -47,7 +47,7 @@ rtm.on("message", (message) => {
 
       const updatedMessages: ChatCompletionRequestMessage[] = newMessages.concat(response)
       setCacheData(key, updatedMessages)
-      const replyMessage = messageText.length > 5 ? messageText.substring(0,5) + "..." : messageText
+      const replyMessage = messageText.length > 15 ? messageText.substring(0,15) + "..." : messageText
       reply(`💬 ${replyMessage}\n${response.content}`)
     } catch (error) {
       if (error instanceof Error) {
