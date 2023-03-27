@@ -20,21 +20,11 @@ type Response = {
 export async function chatGPT({ messages }: ChatGPTInput): Promise<Response> {
   const completion = await openai.createChatCompletion({
     model:"gpt-3.5-turbo",
-    // max 4000
     max_tokens: 1800,
     messages:[
-      {"role": "system", "content": "You are ChatGPT. Answer as concisely as possible."},
-      // {"role": "user", "content": prompt },
       ...messages
     ],
-    // 의외성 (0~1)
-    temperature: 0.7,
-    // 단어 풀의 범위(0~1)
-    top_p: 1,
-    // 자주 사용하는 단어 억제
-    frequency_penalty: 0.2,
-    // 이미 사용된 단어 억제
-    presence_penalty: 0.1
+    temperature: 0,
   })
 
   const response = completion.data.choices.at(0)?.message?.content
